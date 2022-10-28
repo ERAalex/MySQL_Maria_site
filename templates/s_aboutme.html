@@ -1,0 +1,70 @@
+{% extends 'index.html' %}
+
+{% block title %}Обо мне{% endblock %}
+
+{% block style %}
+
+<link rel="stylesheet" href="static/assets/css/def_styles_pages.css">
+
+
+{% endblock%}
+
+
+{% block content %}
+
+<section class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
+
+    <div class="content">
+
+        {% for item in list_art1 %}
+            <a class="major"><h1>{{ item.name }}</h1></a>
+
+            <p class="major"> {{ item.text }}</p>
+            <ul class="actions stacked">
+                <li><a href="{{ url_for('index') }}" class="button big wide smooth-scroll-middle">На главную</a></li>
+            </ul>
+        {% endfor %}
+    </div>
+
+    {% for item in list_ban1 %}
+    <div class="image">
+        <img src="{{item.file_name }}" alt="" />
+    </div>
+    {% endfor %}
+
+</section>
+
+<section class="s_text_center">
+    <p><h2>Несколько слов обо мне</h2></p>
+    <div class="about_me_text1">
+
+
+        <div class="double_box">
+            <div class="left_box_about">
+                <h3><p>I. Образование:</p></h3>
+                <p>Высшее педагогическое образование, учитель английского языка, методика преподавания иностранных языков, 2015.
+                Санкт-Петербург, РГПУ им. Герцена.</p>
+                <h3><p>II. Опыт работы:</p></h3>
+                    <p>- 2014 - 2015 - Преподавание в университете на кафедре иностранных языков</p>
+                    <p>- 2015 - 2022 - Преподавание английского индивидуально и в языковых онлайн-школах;</p>
+                <p>Наличие Международных сертификатов, подтверждающих знание методики преподавания</p>
+                    <p>
+                    <p>
+                    <p>
+            </div>
+
+            <div class="right_box_about">
+                <h3><p>III. Курсы, повышение квалификации:</p></h3>
+                    <p>- 2014 - 2015 - Преподавание в университете на кафедре иностранных языков</p>
+                    <p>- 2015 - 2022 - Преподавание английского индивидуально и в языковых онлайн-школах;</p>
+                <p>Наличие Международных сертификатов, подтверждающих знание методики преподавания</p>
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+{% endblock %}
