@@ -17,6 +17,7 @@ from flask_security import UserMixin, RoleMixin
 from flask_security import login_required
 
 from db_articles import art_all_information, art_add_article, art_get_article, art_update_article, art_delete_article
+from db_images import img_home, img_upload_image
 
 
 
@@ -114,20 +115,15 @@ security = Security(app, user_datastore)
 @app.route('/upload_image')
 @login_required
 def home():
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    s = "SELECT * FROM img_kat"
-    cur.execute(s)  # Execute the SQL
-    list_img = cur.fetchall()
-
-    return render_template('b_image_change.html', list_img=list_img)
+    result = img_home()
+    return render_template('b_image_change.html', list_img=result)
 
 
 
 @app.route('/upload_image', methods=['GET', 'POST'])
 @login_required
 def upload_image():
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-
+    # не смог изолировать этот участок, тк приходится подтягивать переменную app и делаем circular problem
     if request.method == 'POST':
         if 'file1' not in request.files or 'file2' not in request.files:
             return 'there is no file in form!'
@@ -139,18 +135,39 @@ def upload_image():
         file1.save(path)
         file2.save(path2)
 
-        flash('Картинки успешно загружены. E.R.Alex')
-        # сохраняем названия файлов для их поиска плюс сразу прописываем в имя файла весь путь, для href html
-        filename = 'static/images/gallery/' + secure_filename(file1.filename)
-        filename_big = 'static/images/gallery/' + secure_filename(file2.filename)
+        # подключаем модуль с кодом по db.images
+        img_upload_image(file1, file2)
 
-        position = request.form['position']
-        name = request.form['name']
-        text = request.form['text']
+    return redirect(url_for('home'))
 
-        cur.execute("INSERT INTO img_kat (position, name, text, file_name, file_name_big) VALUES (%s,%s,%s,%s,%s)", (position, name, text, filename, filename_big))
-        conn.commit()
-        return redirect(url_for('home'))
+
+
+
+    # cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    #
+    # if request.method == 'POST':
+    #     if 'file1' not in request.files or 'file2' not in request.files:
+    #         return 'there is no file in form!'
+    #     file1 = request.files['file1']
+    #     file2 = request.files['file2']
+    #     path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
+    #     path2 = os.path.join(app.config['UPLOAD_FOLDER'], file2.filename)
+    #
+    #     file1.save(path)
+    #     file2.save(path2)
+    #
+    #     flash('Картинки успешно загружены. E.R.Alex')
+    #     # сохраняем названия файлов для их поиска плюс сразу прописываем в имя файла весь путь, для href html
+    #     filename = 'static/images/gallery/' + secure_filename(file1.filename)
+    #     filename_big = 'static/images/gallery/' + secure_filename(file2.filename)
+    #
+    #     position = request.form['position']
+    #     name = request.form['name']
+    #     text = request.form['text']
+    #
+    #     cur.execute("INSERT INTO img_kat (position, name, text, file_name, file_name_big) VALUES (%s,%s,%s,%s,%s)", (position, name, text, filename, filename_big))
+    #     conn.commit()
+    #     return redirect(url_for('home'))
 
 
 @app.route('/delete/<string:id>', methods=['POST', 'GET'])
