@@ -16,7 +16,7 @@ from flask_security import Security
 from flask_security import UserMixin, RoleMixin
 from flask_security import login_required
 
-from db_articles import art_all_information, art_add_article, art_get_article
+from db_articles import art_all_information, art_add_article, art_get_article, art_update_article
 
 
 
@@ -257,8 +257,18 @@ def add_article():
 @app.route('/edit_art/<id>', methods=['POST', 'GET'])
 @login_required
 def get_article(id):
-    result = art_get_article(id)
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    cur.execute('SELECT * FROM art3 WHERE id = %s', (id,))
+    data = cur.fetchall()
+    cur.close()
+    result = data[0]
     return render_template('b_edit.html', article_show=result)
+
+
+
+    # result = art_get_article(id)
+    # return render_template('b_edit.html', article_show=result)
 
 
 @app.route('/update_edit/<id>', methods=['POST'])
@@ -280,6 +290,12 @@ def update_article(id):
         flash('Article Updated Successfully, EspinosaAlex')
         conn.commit()
         return redirect(url_for('art_change'))
+
+
+    # art_update_article(id)
+    # return redirect(url_for('art_change'))
+    #
+
 
 
 @app.route('/delete_art/<string:id>', methods=['POST', 'GET'])

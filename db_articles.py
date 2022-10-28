@@ -34,11 +34,28 @@ def art_get_article(id):
     total = data[0]
     return total
 
-#
-# def art_update_article
-#
-#
-#
+
+def art_update_article(id):
+    if request.method == 'POST':
+        position = request.form['position']
+        name = request.form['name']
+        text = request.form['text']
+
+        cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+        cur.execute("""
+            UPDATE art3
+            SET position = %s,
+                name = %s,
+                text = %s
+            WHERE id = %s
+        """, (position, name, text, id))
+        flash('Article Updated Successfully, EspinosaAlex')
+        conn.commit()
+        return flash('Article Updated Successfully, EspinosaAlex')
+
+
+
+
 
 
 
