@@ -6486,6 +6486,10 @@ input, select, textarea {
 		opacity: 0;
 	}
 
+
+
+
+
 /* Gallery (style1) */
 
 	.gallery.style1 {
@@ -7016,6 +7020,8 @@ input, select, textarea {
 				width: 100%;
 				border-radius: 0;
 			}
+
+ /* РАЗМЕР окошек галереи */
 
 				.gallery.style2 article .image img {
 					display: block;

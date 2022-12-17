@@ -104,12 +104,7 @@ security = Security(app, user_datastore)
 
 
 
-
-
-
-
-
-###### БЛОК ПО ДОБАВЛЕНИЮ сразу 2 КАРТИНОК И ПУТЕЙ К НИМ В БАЗУ ДАННЫХ ######
+###### БЛОК ПО ДОБАВЛЕНИЮ КАРТИНОК И ПУТЕЙ К НИМ В БАЗУ ДАННЫХ ######
 
 
 @app.route('/upload_image')
@@ -140,34 +135,6 @@ def upload_image():
 
     return redirect(url_for('home'))
 
-
-
-
-    # cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    #
-    # if request.method == 'POST':
-    #     if 'file1' not in request.files or 'file2' not in request.files:
-    #         return 'there is no file in form!'
-    #     file1 = request.files['file1']
-    #     file2 = request.files['file2']
-    #     path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
-    #     path2 = os.path.join(app.config['UPLOAD_FOLDER'], file2.filename)
-    #
-    #     file1.save(path)
-    #     file2.save(path2)
-    #
-    #     flash('Картинки успешно загружены. E.R.Alex')
-    #     # сохраняем названия файлов для их поиска плюс сразу прописываем в имя файла весь путь, для href html
-    #     filename = 'static/images/gallery/' + secure_filename(file1.filename)
-    #     filename_big = 'static/images/gallery/' + secure_filename(file2.filename)
-    #
-    #     position = request.form['position']
-    #     name = request.form['name']
-    #     text = request.form['text']
-    #
-    #     cur.execute("INSERT INTO img_kat (position, name, text, file_name, file_name_big) VALUES (%s,%s,%s,%s,%s)", (position, name, text, filename, filename_big))
-    #     conn.commit()
-    #     return redirect(url_for('home'))
 
 
 @app.route('/delete/<string:id>', methods=['POST', 'GET'])
@@ -440,25 +407,33 @@ def about_me():
     cur.execute(art1)
     list_art1 = cur.fetchall()
 
-    img1 = "SELECT * FROM img_kat WHERE position = 'position1'"
+    img1 = "SELECT * FROM img_kat WHERE position = 'diplom_1_cambridge'"
     cur.execute(img1)  # Execute the SQL
     list_img1 = cur.fetchall()
 
-    img2 = "SELECT * FROM img_kat WHERE position = 'position2'"
+    img2 = "SELECT * FROM img_kat WHERE position = 'diplom_IELTS'"
     cur.execute(img2)  # Execute the SQL
     list_img2 = cur.fetchall()
 
-    img3 = "SELECT * FROM img_kat WHERE position = 'position3'"
+    img3 = "SELECT * FROM img_kat WHERE position = 'diplom_3_C1'"
     cur.execute(img3)  # Execute the SQL
     list_img3 = cur.fetchall()
 
-    img4 = "SELECT * FROM img_kat WHERE position = 'position4'"
+    img4 = "SELECT * FROM img_kat WHERE position = 'diplom_5_vishee'"
     cur.execute(img4)  # Execute the SQL
     list_img4 = cur.fetchall()
 
-    img5 = "SELECT * FROM img_kat WHERE position = 'position5'"
+    img5 = "SELECT * FROM img_kat WHERE position = 'diplom_6_prilozenie_k_vishee'"
     cur.execute(img5)  # Execute the SQL
     list_img5 = cur.fetchall()
+
+    img6 = "SELECT * FROM img_kat WHERE position = 'diplom_7_bakalavr'"
+    cur.execute(img6)  # Execute the SQL
+    list_img6 = cur.fetchall()
+
+    img_about_me = "SELECT * FROM img_kat WHERE position = 'position_1_about_me'"
+    cur.execute(img_about_me)  # Execute the SQL
+    list_img_about_me = cur.fetchall()
 
 
 
@@ -470,6 +445,8 @@ def about_me():
                            list_img3=list_img3,
                            list_img4=list_img4,
                            list_img5=list_img5,
+                           list_img6=list_img6,
+                           list_img_about_me=list_img_about_me,
                            )
 
 

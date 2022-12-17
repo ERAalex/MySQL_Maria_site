@@ -9,6 +9,7 @@ ERA_Alex  eraspb@mail.ru
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link href="static/assets/css/bootstrap.min.css" rel="stylesheet">
 		<link rel="stylesheet" href="static/assets/css/main.css" />
+		<link rel="stylesheet" href="static/css/index_style.css" />
 		<noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
 
 		{% block style %} {% endblock%}
@@ -19,10 +20,7 @@ ERA_Alex  eraspb@mail.ru
 
 		<!-- Wrapper -->
 			<div id="wrapper" class="divided">
-
-
 				<!-- One -->
-
 					<section>
 						<div class="hamburger-menu">
 						  	<input id="menu__toggle" type="checkbox" />
@@ -169,25 +167,21 @@ ERA_Alex  eraspb@mail.ru
 						</div>
 
 
-
-
-
-
-
 						<!-- Gallery -->
 
 							<div class="gallery style2 medium lightbox onscroll-fade-in">
+
 								<article>
 									{% for item in list_img1 %}
-									<a href= "{{item.file_name_big }}" class="image">
 										<img src="{{item.file_name }}" alt="" />
-									</a>
 
 									<div class="caption">
 										<h3>{{ item.name}}</h3>
 										<p>{{ item.text}}</p>
 										<ul class="actions fixed">
-											<li><span class="button small">Details</span></li>
+											<a href= "https://www.nationalgeographic.co.uk/travel" target="_blank">
+												<li><span class="button small">Details</span></li>
+											</a>
 										</ul>
 
 									</div>
@@ -196,32 +190,35 @@ ERA_Alex  eraspb@mail.ru
 
 								<article>
 									{% for item in list_img2 %}
-									<a href= "{{item.file_name_big }}" class="image">
 										<img src="{{item.file_name }}" alt="" />
-									</a>
 
 									<div class="caption">
 										<h3>{{ item.name}}</h3>
 										<p>{{ item.text}}</p>
 										<ul class="actions fixed">
-											<li><span class="button small">Details</span></li>
+											<a href= "https://www.fluentu.com/blog/
+											business-english/importance-of-english-in-business/" target="_blank">
+												<li><span class="button small">Details</span></li>
+											</a>
 										</ul>
 
 									</div>
 									{% endfor %}
+
 								</article>
 
 								<article>
 									{% for item in list_img3 %}
-									<a href= "{{item.file_name_big }}" class="image">
 										<img src="{{item.file_name }}" alt="" />
-									</a>
 
 									<div class="caption">
 										<h3>{{ item.name}}</h3>
 										<p>{{ item.text}}</p>
 										<ul class="actions fixed">
-											<li><span class="button small">Details</span></li>
+											<a href= "https://www.amazon.com/Prime-Video/b?node=2676882011"
+											   target="_blank">
+												<li><span class="button small">Details</span></li>
+											</a>
 										</ul>
 
 									</div>
@@ -230,15 +227,18 @@ ERA_Alex  eraspb@mail.ru
 
 								<article>
 									{% for item in list_img4 %}
-									<a href= "{{item.file_name_big }}" class="image">
 										<img src="{{item.file_name }}" alt="" />
-									</a>
 
 									<div class="caption">
 										<h3>{{ item.name}}</h3>
 										<p>{{ item.text}}</p>
 										<ul class="actions fixed">
-											<li><span class="button small">Details</span></li>
+											<a href= "https://academicpositions.com/career-advice/
+											a-guide-to-english-proficiency-tests#:~:text=Here%20is%20an%20overview%20of
+											,the%20CAE%2C%20and%20the%20CPE.&text=The%20Test%20of%20English%20as
+											,commonly%20used%20English%20proficiency%20test." target="_blank">
+												<li><span class="button small">Details</span></li>
+											</a>
 										</ul>
 
 									</div>
@@ -247,15 +247,16 @@ ERA_Alex  eraspb@mail.ru
 
 								<article>
 									{% for item in list_img5 %}
-									<a href= "{{item.file_name_big }}" class="image">
 										<img src="{{item.file_name }}" alt="" />
-									</a>
 
 									<div class="caption">
 										<h3>{{ item.name}}</h3>
 										<p>{{ item.text}}</p>
 										<ul class="actions fixed">
-											<li><span class="button small">Details</span></li>
+											<a href= "https://www.nationalgeographic.co.uk/history-and-civilisation"
+											   target="_blank">
+												<li><span class="button small">Details</span></li>
+											</a>
 										</ul>
 
 									</div>
@@ -277,17 +278,20 @@ ERA_Alex  eraspb@mail.ru
 							<p>Обязательно подпишитесь в моих социальных сетях</p>
 							<div class="items style1 medium onscroll-fade-in">
 								<section>
-									<a href="https://vk.com/moonana" target="_blank"><span class="icon style2 major fa-gem"></span></a>
-									<h3><a href="https://vk.com/moonana" target="_blank" >VK</a></h3>
+									<a href="https://t.me/Maria_Espinosa_Rozova" target="_blank">
+										<span class="icon style2 major fa-gem"></span></a>
+									<h3><a href="https://t.me/Maria_Espinosa_Rozova" target="_blank" >Telegram</a></h3>
 									<p></p>
 								</section>
 								<section>
-									<a href="https://www.instagram.com/espinosarozova/" target="_blank"><span class="icon solid style2 major fa-save"></span></a>
+									<a href="https://www.instagram.com/espinosarozova/" target="_blank">
+										<span class="icon solid style2 major fa-save"></span></a>
 									<h3><a href="https://www.instagram.com/espinosarozova/" target="_blank" >Instagram</a></h3>
 									<p></p>
 								</section>
 								<section>
-									<a href="https://www.facebook.com/maria.timonina.39" target="_blank"><span class="icon solid style2 major fa-chart-bar"></span></a>
+									<a href="https://www.facebook.com/maria.timonina.39" target="_blank">
+										<span class="icon solid style2 major fa-chart-bar"></span></a>
 									<h3><a href="https://www.facebook.com/maria.timonina.39" target="_blank" >Facebook</a></h3>
 									<p></p>
 								</section>
@@ -337,7 +341,9 @@ ERA_Alex  eraspb@mail.ru
 								</ul>
 
 								<ul class="actions stacked">
-								<li><a href="https://t.me/Maria_Espinosa_Rozova" class="button big wide smooth-scroll-middle">Написать в телеграм</a></li>
+								<li><a href="https://t.me/Maria_Espinosa_Rozova"
+									   class="button big wide smooth-scroll-middle" target="_blank">
+									Написать в телеграм</a></li>
 								</ul>
 
 							</form>
@@ -356,7 +362,7 @@ ERA_Alex  eraspb@mail.ru
 								<li><a href="https://www.facebook.com/maria.timonina.39" target="_blank" class="icon brands style2 fa-facebook-f"><span class="label">Facebook</span></a></li>
 								<li><a href="https://www.instagram.com/espinosarozova/" target="_blank" class="icon brands style2 fa-instagram"><span class="label">Instagram</span></a></li>
 								<!-- <li><a href="#" class="icon brands style2 fa-linkedin-in"><span class="label">LinkedIn</span></a></li> -->
-								<li><a href="https://vk.com/moonana" target="_blank" class="icon style2 fa-gem"><span class="label">Email</span></a></li>
+								<li><a href="https://t.me/Maria_Espinosa_Rozova" target="_blank" class="icon style2 fa-gem"><span class="label">Email</span></a></li>
 							</ul>
 							<p><a>&copy; Design: E.R. Alex</a>.</p>
 						</div>
