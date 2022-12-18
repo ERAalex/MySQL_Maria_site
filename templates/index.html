@@ -30,8 +30,8 @@ ERA_Alex  eraspb@mail.ru
 						  	<ul class="menu__box">
 								<li><a class="menu__item" href="{{ url_for('index') }}">Главная</a></li>
 								<li><a class="menu__item" href="{{ url_for('about_me') }}">Обо мне</a></li>
-								<li><a class="menu__item" href="#">Учебные пособия</a></li>
-								<li><a class="menu__item" href="#">Технологии</a></li>
+								<li><a class="menu__item" href="{{ url_for('technology') }}">Технологии</a></li>
+								<li><a class="menu__item" href="{{ url_for('books') }}">Учебные пособия</a></li>
 								<li><a class="menu__item" href="#contact_ancle">Контакты</a></li>
 						  	</ul>
 						</div>
@@ -53,7 +53,8 @@ ERA_Alex  eraspb@mail.ru
 
 
 
-					<section class="banner style1 orient-left content-align-left image-position-right fullscreen onload-image-fade-in onload-content-fade-right">
+					<section class="banner style1 orient-left content-align-left image-position-right
+					fullscreen onload-image-fade-in onload-content-fade-right">
 						<div class="content">
 
 							{% for item in list_art1 %}
@@ -113,7 +114,7 @@ ERA_Alex  eraspb@mail.ru
 							<h2>{{ item.name }}</h2>
 							<p>{{ item.text }}</p>
 							<ul class="actions stacked">
-								<li><a href="#" class="button">Технологии</a></li>
+								<li><a href="{{ url_for('technology') }}" class="button">Технологии</a></li>
 							</ul>
 							{% endfor %}
 
@@ -138,7 +139,7 @@ ERA_Alex  eraspb@mail.ru
 							<h2>{{ item.name }}</h2>
 							<p>{{ item.text }}</p>
 							<ul class="actions stacked">
-								<li><a href="#" class="button">Учебные пособия</a></li>
+								<li><a href="{{ url_for('books') }}" class="button">Печатные издания</a></li>
 							</ul>
 
 							{% endfor %}

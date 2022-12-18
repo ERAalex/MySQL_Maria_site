@@ -368,19 +368,8 @@ def index():
 
 
 
-
-
-
-@app.route("/about")
-def about():
-    print(url_for('about'))
-    return render_template('about.html', title='О нас')
-
-
 @app.route("/about_me")
 def about_me():
-    print(url_for('about_me'))
-
     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
 
     ban1 = "SELECT * FROM img_kat WHERE position = 'banner1'"
@@ -452,6 +441,79 @@ def about_me():
 
 
 
+
+
+@app.route("/technology")
+def technology():
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    art1 = "SELECT * FROM img_kat WHERE position = 'banner3'"
+    cur.execute(art1)
+    banner_4 = cur.fetchall()
+
+    art1 = "SELECT * FROM img_kat WHERE position = 'tech_1'"
+    cur.execute(art1)
+    banner_1 = cur.fetchall()
+
+    art2 = "SELECT * FROM img_kat WHERE position = 'tech_2'"
+    cur.execute(art2)
+    banner_2 = cur.fetchall()
+
+    art3 = "SELECT * FROM img_kat WHERE position = 'tech_3'"
+    cur.execute(art3)
+    banner_3 = cur.fetchall()
+
+    art4 = "SELECT * FROM img_kat WHERE position = 'tech_4'"
+    cur.execute(art4)
+    banner_4_1 = cur.fetchall()
+
+    art5 = "SELECT * FROM img_kat WHERE position = 'tech_5'"
+    cur.execute(art5)
+    banner_5 = cur.fetchall()
+
+
+    return render_template('main_pages/s_technology.html', title='Технологии',
+                           banner_4=banner_4,
+                           banner_1=banner_1,
+                           banner_2=banner_2,
+                           banner_3=banner_3,
+                           banner_4_1=banner_4_1,
+                           banner_5=banner_5,
+                           )
+
+
+@app.route("/books")
+def books():
+    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+
+    art0 = "SELECT * FROM img_kat WHERE position = 'banner4'"
+    cur.execute(art0)
+    maria_books_0 = cur.fetchall()
+
+    art1 = "SELECT * FROM img_kat WHERE position = 'books_1'"
+    cur.execute(art1)
+    maria_books_1 = cur.fetchall()
+
+    art2 = "SELECT * FROM img_kat WHERE position = 'books_2'"
+    cur.execute(art2)
+    maria_books_2 = cur.fetchall()
+
+    art3 = "SELECT * FROM img_kat WHERE position = 'books_3'"
+    cur.execute(art3)
+    maria_books_3 = cur.fetchall()
+
+    art4 = "SELECT * FROM img_kat WHERE position = 'books_4'"
+    cur.execute(art4)
+    maria_books_4 = cur.fetchall()
+
+
+    return render_template('main_pages/s_books.html', title='Учебные пособия',
+                           maria_books_0=maria_books_0,
+                           maria_books_1=maria_books_1,
+                           maria_books_2=maria_books_2,
+                           maria_books_3=maria_books_3,
+                           maria_books_4=maria_books_4,
+                           )
 
 
 
