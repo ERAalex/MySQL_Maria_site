@@ -3,10 +3,7 @@
 {% block title %}Обо мне{% endblock %}
 
 {% block style %}
-
 <link rel="stylesheet" href="static/assets/css/def_styles_pages.css">
-
-
 {% endblock%}
 
 
@@ -166,6 +163,64 @@
 								<!-- art6 -->
 								<article>
 									{% for item in list_img6 %}
+									<center><img src="{{item.file_name }}" alt="" /></center>
+
+
+									<div class="caption">
+										<h3>{{ item.name}}</h3>
+										<p>{{ item.text}}</p>
+										<ul class="actions fixed">
+											<a href= "{{item.file_name_big }}" class="image">
+												<li><span class="button small">Details</span></li>
+											</a>
+										</ul>
+
+									</div>
+									{% endfor %}
+								</article>
+
+								<!-- art7 -->
+								<article>
+									{% for item in list_img7 %}
+									<center><img src="{{item.file_name }}" alt="" /></center>
+
+
+									<div class="caption">
+										<h3>{{ item.name}}</h3>
+										<p>{{ item.text}}</p>
+										<ul class="actions fixed">
+											<a href= "{{item.file_name_big }}" class="image">
+												<li><span class="button small">Details</span></li>
+											</a>
+										</ul>
+
+									</div>
+									{% endfor %}
+								</article>
+
+								<!-- art8 -->
+								<article>
+									{% for item in list_img8 %}
+									<center><img src="{{item.file_name }}" alt="" /></center>
+
+
+									<div class="caption">
+										<h3>{{ item.name}}</h3>
+										<p>{{ item.text}}</p>
+										<ul class="actions fixed">
+											<a href= "{{item.file_name_big }}" class="image">
+												<li><span class="button small">Details</span></li>
+											</a>
+										</ul>
+
+									</div>
+									{% endfor %}
+								</article>
+
+
+								<!-- art9 -->
+								<article>
+									{% for item in list_img9 %}
 									<center><img src="{{item.file_name }}" alt="" /></center>
 
 

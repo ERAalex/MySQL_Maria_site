@@ -111,7 +111,7 @@ security = Security(app, user_datastore)
 @login_required
 def home():
     result = img_home()
-    return render_template('b_image_change.html', list_img=result)
+    return render_template('image_upload/b_image_change.html', list_img=result)
 
 
 
@@ -188,7 +188,7 @@ def get_image(id):
     data = cur.fetchall()
     cur.close()
     print(data[0])
-    return render_template('b_img_edit.html', article_show=data[0])
+    return render_template('image_upload/b_img_edit.html', article_show=data[0])
 
 
 @app.route('/update/<id>', methods=['POST'])
@@ -228,7 +228,7 @@ def update_image(id):
 @login_required
 def art_change():
     result = art_all_information()
-    return render_template('b_art_change.html', list_users=result)
+    return render_template('article_upload/b_art_change.html', list_users=result)
 
 
 @app.route('/add_articles', methods=['POST'])
@@ -242,7 +242,7 @@ def add_article():
 @login_required
 def get_article(id):
     result = art_get_article(id)
-    return render_template('b_edit.html', article_show=result)
+    return render_template('article_upload/b_edit.html', article_show=result)
 
 
 @app.route('/update_edit/<id>', methods=['POST'])
@@ -260,21 +260,6 @@ def delete_article(id):
 
 
 ###### БЛОК ПО ИЗМЕНЕНИЮ В БАЗЕ ДАННЫХ ######
-
-
-
-
-
-
-
-
-menu = [
-    {"name": "Установка", "url": "install flask"},
-    {"name": "Приложение", "url": "app"},
-    {"name": "Обратная связь", "url": "contact"},
-    ]
-
-
 
 
 
@@ -389,7 +374,7 @@ def index():
 @app.route("/about")
 def about():
     print(url_for('about'))
-    return render_template('about.html', title='О нас', menu=menu_names)
+    return render_template('about.html', title='О нас')
 
 
 @app.route("/about_me")
@@ -435,9 +420,21 @@ def about_me():
     cur.execute(img_about_me)  # Execute the SQL
     list_img_about_me = cur.fetchall()
 
+    img7 = "SELECT * FROM img_kat WHERE position = 'diplom_8_education_guide'"
+    cur.execute(img7)  # Execute the SQL
+    list_img7 = cur.fetchall()
+
+    img8 = "SELECT * FROM img_kat WHERE position = 'diplom_9_license_guide'"
+    cur.execute(img8)  # Execute the SQL
+    list_img8 = cur.fetchall()
+
+    img9 = "SELECT * FROM img_kat WHERE position = 'diplom_4_aspirantura'"
+    cur.execute(img9)  # Execute the SQL
+    list_img9 = cur.fetchall()
 
 
-    return render_template('s_aboutme.html', title='Обо мне', list_art1=list_art1,
+
+    return render_template('main_pages/s_aboutme.html', title='Обо мне', list_art1=list_art1,
                            list_ban1=list_ban1,
 
                            list_img1=list_img1,
@@ -446,6 +443,9 @@ def about_me():
                            list_img4=list_img4,
                            list_img5=list_img5,
                            list_img6=list_img6,
+                           list_img7=list_img7,
+                           list_img8=list_img8,
+                           list_img9=list_img9,
                            list_img_about_me=list_img_about_me,
                            )
 
