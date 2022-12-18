@@ -2,7 +2,8 @@ import psycopg2
 import psycopg2.extras
 from flask import request, flash
 
-conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="localhost")
+# conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="localhost")
+conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="db_postgres")
 
 
 ###### БЛОК ПО ИЗМЕНЕНИЮ В БАЗЕ ДАННЫХ СТАТЕЙ ТЕКСТОВ ######

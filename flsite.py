@@ -30,8 +30,8 @@ if 'SECURITY_PASSWORD_SALT' not in app.config:
 
 
 
-# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://alex:nazca007@db_postgres:5432/maria'
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://alex:nazca007@localhost:5432/maria'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://alex:nazca007@db_postgres:5432/maria'
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://alex:nazca007@localhost:5432/maria'
 
 
 # Создать объект подключения к базе данных
@@ -43,8 +43,8 @@ DB_NAME = "maria"
 DB_USER = "alex"
 DB_PASS = "nazca007"
 
-# conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="db_postgres")
-conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="localhost")
+conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="db_postgres")
+# conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="localhost")
 
 UPLOAD_FOLDER = 'static/images/gallery/'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER

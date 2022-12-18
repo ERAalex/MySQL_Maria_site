@@ -3,7 +3,7 @@ version: "3.7"
 services:
   app:
     container_name: maria_flask_cont
-    image: maria_flask_new
+    image: maria_site_flask
     environment:
       - DATABASE_URL=postgresql://alex:nazca007@db_postgres:5432/maria
     ports:

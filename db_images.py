@@ -5,7 +5,8 @@ import os
 from werkzeug.utils import secure_filename
 
 
-conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="localhost")
+# conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="localhost")
+conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="db_postgres")
 
 
 def img_home():
