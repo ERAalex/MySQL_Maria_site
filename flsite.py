@@ -108,7 +108,6 @@ def home():
     return render_template('image_upload/b_image_change.html', list_img=result)
 
 
-
 @app.route('/upload_image', methods=['GET', 'POST'])
 @login_required
 def upload_image():
@@ -155,7 +154,7 @@ def delete_img(id):
 
 
     cur.execute('DELETE FROM img_kat WHERE id = {0}'.format(id))
-    cur.commit()
+    db_2.commit()
 
     # удаляем не только из базы данные, но и сами 2 картинки с сайта (чтобы не было мусора)
     # картинка может быть двойная и в первом проходе удалим ее и чтобы не было ошибок запакуем в try c FileNotFoundErr
@@ -175,12 +174,11 @@ def delete_img(id):
 @app.route('/edit/<id>', methods=['POST', 'GET'])
 @login_required
 def get_image(id):
-
     cur.execute('SELECT * FROM img_kat WHERE id = %s', (id,))
     data = cur.fetchall()
-    cur.close()
-    print(data[0])
-    return render_template('image_upload/b_img_edit.html', article_show=data[0])
+    print(data)
+    total = data[0]
+    return render_template('image_upload/b_img_edit.html', article_show=total)
 
 
 @app.route('/update/<id>', methods=['POST'])
@@ -203,7 +201,8 @@ def update_image(id):
             WHERE id = %s
         """, (position, name, text, small_img, big_img, id))
         flash('Image Information Updated Successfully, E.R.Alex')
-        cur.commit()
+        db_2.commit()
+        db_2.close()
         return redirect(url_for('home'))
 
 

@@ -31,7 +31,7 @@ def img_upload_image(file1, file2):
 
     cur.execute("INSERT INTO img_kat (position, name, text, file_name, file_name_big) VALUES (%s,%s,%s,%s,%s)",
                 (position, name, text, filename, filename_big))
-    cur.commit()
+    db.commit()
     return flash('Картинки успешно загружены. E.R.Alex')
 
 
