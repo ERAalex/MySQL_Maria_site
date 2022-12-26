@@ -8,6 +8,7 @@ import email_validator
 import urllib.request
 import os
 
+from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 
 from flask_security import SQLAlchemyUserDatastore
@@ -15,8 +16,8 @@ from flask_security import Security
 from flask_security import UserMixin, RoleMixin
 from flask_security import login_required
 
-# from db_articles import art_all_information, art_add_article, art_get_article, art_update_article, art_delete_article
-# from db_images import img_home, img_upload_image
+from db_articles import art_all_information, art_add_article, art_get_article, art_update_article, art_delete_article
+from db_images import img_home, img_upload_image
 
 
 
@@ -28,27 +29,16 @@ if 'SECURITY_PASSWORD_SALT' not in app.config:
     app.config['SECURITY_PASSWORD_SALT'] = app.config['SECRET_KEY']
 
 
+db = SQLAlchemy(app)
+app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://alex:nazca007@localhost:3306/maria'
 
-# # MySQL configurations
 
+# MySQL configurations
 # Open database connection
-db = pymysql.connect(host='localhost', user= 'alex', password='nazca007' , database='maria')
+db_2 = pymysql.connect(host='localhost', user='alex', password='nazca007', database='maria')
 
 # prepare a cursor object using cursor() method
-cur = db.cursor()
-
-
-# app.config['MYSQL_HOST'] = 'localhost'
-# app.config['MYSQL_DATABASE_USER'] = 'alex'
-# app.config['MYSQL_DATABASE_PASSWORD'] = 'nazca007'
-# app.config['MYSQL_DATABASE_DB'] = 'maria'
-# app.config['MYSQL_DATABASE_HOST'] = 'localhost'
-#
-# mysql = MySQL()
-#
-# #Creating a connection cursor
-# cur = mysql.connection.cursor()
-
+cur = db_2.cursor()
 
 
 
@@ -77,193 +67,190 @@ mail = Mail(app)
 
 
 
-# Создание схемы User  - FLASK SEQURITY
+# Создание схемы User  - FLASK SEQURITY - нам пришлось тут создать новый параметр - db,
+# переменная db_2 нужна для другого
 
 
-#
-# roles_users = db.Table('roles_users',
-#                        db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
-#                        db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
-#                        )
-#
-#
-# class User(db.Model, UserMixin):
-#     id = db.Column(db.Integer, primary_key=True)
-#     email = db.Column(db.String(100), unique=True)
-#     password = db.Column(db.String(255))
-#     active = db.Column(db.Boolean)
-#     roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
-#
-#
-# class Role(db.Model, RoleMixin):
-#     id = db.Column(db.Integer(), primary_key=True)
-#     name = db.Column(db.String(100), unique=True)
-#     description = db.Column(db.String(255))
-#
-#
-# user_datastore = SQLAlchemyUserDatastore(db, User, Role)
-# security = Security(app, user_datastore)
-#
+roles_users = db.Table('roles_users',
+                       db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+                       db.Column('role_id', db.Integer, db.ForeignKey('role.id'))
+                       )
+
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(100), unique=True)
+    password = db.Column(db.String(255))
+    active = db.Column(db.Boolean)
+    roles = db.relationship('Role', secondary=roles_users, backref=db.backref('users', lazy='dynamic'))
+
+
+class Role(db.Model, RoleMixin):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(100), unique=True)
+    description = db.Column(db.String(255))
+
+
+user_datastore = SQLAlchemyUserDatastore(db, User, Role)
+security = Security(app, user_datastore)
 
 
 
 
-###### БЛОК ПО ДОБАВЛЕНИЮ КАРТИНОК И ПУТЕЙ К НИМ В БАЗУ ДАННЫХ ######
 
-#
-# @app.route('/upload_image')
-# @login_required
-# def home():
-#     result = img_home()
-#     return render_template('image_upload/b_image_change.html', list_img=result)
-#
-#
-#
-# @app.route('/upload_image', methods=['GET', 'POST'])
-# @login_required
-# def upload_image():
-#     # не смог изолировать этот участок, тк приходится подтягивать переменную app и делаем circular problem
-#     if request.method == 'POST':
-#         if 'file1' not in request.files or 'file2' not in request.files:
-#             return 'there is no file in form!'
-#         file1 = request.files['file1']
-#         file2 = request.files['file2']
-#         path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
-#         path2 = os.path.join(app.config['UPLOAD_FOLDER'], file2.filename)
-#
-#         file1.save(path)
-#         file2.save(path2)
-#
-#         # подключаем модуль с кодом по db.images
-#         img_upload_image(file1, file2)
-#
-#     return redirect(url_for('home'))
-#
-#
-#
-# @app.route('/delete/<string:id>', methods=['POST', 'GET'])
-# @login_required
-# def delete_img(id):
-#     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-#
-#     # ищем как зовут файл в базе данных,имя нужно, чтобы потом удалить его в системе сайта. Т.е. ищем file_name
-#     cur.execute('SELECT * FROM img_kat WHERE id = %s', (id,))
-#     dat_del = cur.fetchall()
-#     # у нас в базе 6 колонок и предпоследний итем это имя маленьк файла, послед итем это название большого.
-#     # dat_del[0] это коллекция - например внутри нее [4, 'adsad', 'asdsad', 'asdasd', 'ZaresURSS.jpg', 'Espad.jpg']
-#     # путем перебора достаем имена 2 файлов и ставим в переменную
-#     small_name_del = ''
-#     big_name_del = ''
-#     count = 0
-#     for x in dat_del[0]:
-#         count += 1
-#         if count == 5:
-#             small_name_del = x
-#             print(small_name_del)
-#         if count == 6:
-#             big_name_del = x
-#             print(big_name_del)
-#
-#
-#     cur.execute('DELETE FROM img_kat WHERE id = {0}'.format(id))
-#     conn.commit()
-#
-#     # удаляем не только из базы данные, но и сами 2 картинки с сайта (чтобы не было мусора)
-#     # картинка может быть двойная и в первом проходе удалим ее и чтобы не было ошибок запакуем в try c FileNotFoundErr
-#     try:
-#         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], small_name_del))
-#         os.remove(os.path.join(app.config['UPLOAD_FOLDER'], big_name_del))
-#     except FileNotFoundError:
-#         pass
-#
-#     flash('Image link Removed Successfully')
-#     return redirect(url_for('home'))
-#
-#
-#
-# ##
-#
-# @app.route('/edit/<id>', methods=['POST', 'GET'])
-# @login_required
-# def get_image(id):
-#     cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-#
-#     cur.execute('SELECT * FROM img_kat WHERE id = %s', (id,))
-#     data = cur.fetchall()
-#     cur.close()
-#     print(data[0])
-#     return render_template('image_upload/b_img_edit.html', article_show=data[0])
-#
-#
-# @app.route('/update/<id>', methods=['POST'])
-# @login_required
-# def update_image(id):
-#     if request.method == 'POST':
-#         position = request.form['position']
-#         name = request.form['name']
-#         text = request.form['text']
-#         small_img = request.form['small_img']
-#         big_img = request.form['big_img']
-#
-#         cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-#         cur.execute("""
-#             UPDATE img_kat
-#             SET position = %s,
-#                 name = %s,
-#                 text = %s,
-#                 file_name = %s,
-#                 file_name_big = %s
-#             WHERE id = %s
-#         """, (position, name, text, small_img, big_img, id))
-#         flash('Image Information Updated Successfully, E.R.Alex')
-#         conn.commit()
-#         return redirect(url_for('home'))
-#
-#
-# ###### ###### ###### ###### ###### ###### ###### ###### ######
-#
-#
-#
-#
-#
-# ###### БЛОК ПО ИЗМЕНЕНИЮ В ШАБЛОНЕ - art_change - В БАЗЕ ДАННЫХ ######
-#
-# @app.route('/art_change')
-# @login_required
-# def art_change():
-#     result = art_all_information()
-#     return render_template('article_upload/b_art_change.html', list_users=result)
-#
-#
-# @app.route('/add_articles', methods=['POST'])
-# @login_required
-# def add_article():
-#     art_add_article()
-#     return redirect(url_for('art_change'))
-#
-#
-# @app.route('/edit_art/<id>', methods=['POST', 'GET'])
-# @login_required
-# def get_article(id):
-#     result = art_get_article(id)
-#     return render_template('article_upload/b_edit.html', article_show=result)
-#
-#
-# @app.route('/update_edit/<id>', methods=['POST'])
-# @login_required
-# def update_article(id):
-#     art_update_article(id)
-#     return redirect(url_for('art_change'))
-#
-#
-# @app.route('/delete_art/<string:id>', methods=['POST', 'GET'])
-# @login_required
-# def delete_article(id):
-#     art_delete_article(id)
-#     return redirect(url_for('art_change'))
+##### БЛОК ПО ДОБАВЛЕНИЮ КАРТИНОК И ПУТЕЙ К НИМ В БАЗУ ДАННЫХ ######
 
 
-###### БЛОК ПО ИЗМЕНЕНИЮ В БАЗЕ ДАННЫХ ######
+@app.route('/upload_image')
+@login_required
+def home():
+    result = img_home()
+    return render_template('image_upload/b_image_change.html', list_img=result)
+
+
+
+@app.route('/upload_image', methods=['GET', 'POST'])
+@login_required
+def upload_image():
+    # не смог изолировать этот участок, тк приходится подтягивать переменную app и делаем circular problem
+    if request.method == 'POST':
+        if 'file1' not in request.files or 'file2' not in request.files:
+            return 'there is no file in form!'
+        file1 = request.files['file1']
+        file2 = request.files['file2']
+        path = os.path.join(app.config['UPLOAD_FOLDER'], file1.filename)
+        path2 = os.path.join(app.config['UPLOAD_FOLDER'], file2.filename)
+
+        file1.save(path)
+        file2.save(path2)
+
+        # подключаем модуль с кодом по db.images
+        img_upload_image(file1, file2)
+
+    return redirect(url_for('home'))
+
+
+
+@app.route('/delete/<string:id>', methods=['POST', 'GET'])
+@login_required
+def delete_img(id):
+
+    # ищем как зовут файл в базе данных,имя нужно, чтобы потом удалить его в системе сайта. Т.е. ищем file_name
+    cur.execute('SELECT * FROM img_kat WHERE id = %s', (id,))
+    dat_del = cur.fetchall()
+    # у нас в базе 6 колонок и предпоследний итем это имя маленьк файла, послед итем это название большого.
+    # dat_del[0] это коллекция - например внутри нее [4, 'adsad', 'asdsad', 'asdasd', 'ZaresURSS.jpg', 'Espad.jpg']
+    # путем перебора достаем имена 2 файлов и ставим в переменную
+    small_name_del = ''
+    big_name_del = ''
+    count = 0
+    for x in dat_del[0]:
+        count += 1
+        if count == 5:
+            small_name_del = x
+            print(small_name_del)
+        if count == 6:
+            big_name_del = x
+            print(big_name_del)
+
+
+    cur.execute('DELETE FROM img_kat WHERE id = {0}'.format(id))
+    cur.commit()
+
+    # удаляем не только из базы данные, но и сами 2 картинки с сайта (чтобы не было мусора)
+    # картинка может быть двойная и в первом проходе удалим ее и чтобы не было ошибок запакуем в try c FileNotFoundErr
+    try:
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], small_name_del))
+        os.remove(os.path.join(app.config['UPLOAD_FOLDER'], big_name_del))
+    except FileNotFoundError:
+        pass
+
+    flash('Image link Removed Successfully')
+    return redirect(url_for('home'))
+
+
+
+##
+
+@app.route('/edit/<id>', methods=['POST', 'GET'])
+@login_required
+def get_image(id):
+
+    cur.execute('SELECT * FROM img_kat WHERE id = %s', (id,))
+    data = cur.fetchall()
+    cur.close()
+    print(data[0])
+    return render_template('image_upload/b_img_edit.html', article_show=data[0])
+
+
+@app.route('/update/<id>', methods=['POST'])
+@login_required
+def update_image(id):
+    if request.method == 'POST':
+        position = request.form['position']
+        name = request.form['name']
+        text = request.form['text']
+        small_img = request.form['small_img']
+        big_img = request.form['big_img']
+
+        cur.execute("""
+            UPDATE img_kat
+            SET position = %s,
+                name = %s,
+                text = %s,
+                file_name = %s,
+                file_name_big = %s
+            WHERE id = %s
+        """, (position, name, text, small_img, big_img, id))
+        flash('Image Information Updated Successfully, E.R.Alex')
+        cur.commit()
+        return redirect(url_for('home'))
+
+
+###### ###### ###### ###### ###### ###### ###### ###### ######
+
+
+
+
+
+###### БЛОК ПО ИЗМЕНЕНИЮ В ШАБЛОНЕ - art_change - В БАЗЕ ДАННЫХ ######
+
+@app.route('/art_change')
+@login_required
+def art_change():
+    result = art_all_information()
+    return render_template('article_upload/b_art_change.html', list_users=result)
+
+
+@app.route('/add_articles', methods=['POST'])
+@login_required
+def add_article():
+    art_add_article()
+    return redirect(url_for('art_change'))
+
+
+@app.route('/edit_art/<id>', methods=['POST', 'GET'])
+@login_required
+def get_article(id):
+    result = art_get_article(id)
+    return render_template('article_upload/b_edit.html', article_show=result)
+
+
+@app.route('/update_edit/<id>', methods=['POST'])
+@login_required
+def update_article(id):
+    art_update_article(id)
+    return redirect(url_for('art_change'))
+
+
+@app.route('/delete_art/<string:id>', methods=['POST', 'GET'])
+@login_required
+def delete_article(id):
+    art_delete_article(id)
+    return redirect(url_for('art_change'))
+
+
+##### БЛОК ПО ИЗМЕНЕНИЮ В БАЗЕ ДАННЫХ ######
 
 
 

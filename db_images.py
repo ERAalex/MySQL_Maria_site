@@ -3,14 +3,17 @@ import psycopg2.extras
 from flask import request, flash
 import os
 from werkzeug.utils import secure_filename
+import pymysql
 
 
-# conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="localhost")
-conn = psycopg2.connect(dbname="maria", user="alex", password="nazca007", host="db_postgres")
+# MySQL configurations
+# Open database connection
+db = pymysql.connect(host='localhost', user='alex', password='nazca007', database='maria')
 
+# prepare a cursor object using cursor() method
+cur = db.cursor()
 
 def img_home():
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     s = "SELECT * FROM img_kat"
     cur.execute(s)
     list_img = cur.fetchall()
@@ -18,7 +21,6 @@ def img_home():
 
 
 def img_upload_image(file1, file2):
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
     # сохраняем названия файлов для их поиска плюс сразу прописываем в имя файла весь путь, для href html
     filename = 'static/images/gallery/' + secure_filename(file1.filename)
     filename_big = 'static/images/gallery/' + secure_filename(file2.filename)
@@ -29,7 +31,7 @@ def img_upload_image(file1, file2):
 
     cur.execute("INSERT INTO img_kat (position, name, text, file_name, file_name_big) VALUES (%s,%s,%s,%s,%s)",
                 (position, name, text, filename, filename_big))
-    conn.commit()
+    cur.commit()
     return flash('Картинки успешно загружены. E.R.Alex')
 
 
