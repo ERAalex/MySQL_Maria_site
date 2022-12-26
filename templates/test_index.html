@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<!--
+ERA_Alex  eraspb@mail.ru
+-->
+<html>
+	<head>
+		<title>{% block title %} Maria {% endblock %}</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+
+		{% block style %} {% endblock%}
+
+
+	</head>
+	<body class="is-preload">
+
+
+							<!-- Первая запись position1-->
+
+		<div class="some">
+			<h2>Espinosa Rozova Maria</h2>
+		</div>
+			<section class="e">
+				<div class="content">
+
+					{% for item in list_art1 %}
+					<a class="major"><h1>{{ item.name }}</h1></a>
+
+					<p class="major"> {{ item.text }}  </p>
+
+					{% endfor %}
+
+				</div>
+
+				{% for item in list_ban1 %}
+				<div class="image">
+					<img src="{{item.file_name }}" alt="" />
+				</div>
+				{% endfor %}
+
+			</section>
+
+
+	sdds
+	dfs
+	df
+	sdf
+	s
+	dfsd
+
+
+	</body>
+</html>

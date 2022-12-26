@@ -6,10 +6,11 @@ ERA_Alex  eraspb@mail.ru
 	<head>
 		<title>{% block title %} Maria {% endblock %}</title>
 		<meta charset="utf-8" />
-		<meta name="" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link href="static/assets/css/bootstrap.min.css" rel="stylesheet">
+		<link rel="stylesheet" href="static/assets/css/main.css" />
 		<link rel="stylesheet" href="static/css/index_style.css" />
-		<link href="static/assets/css/bootstrap.min.css" rel="stylesheet"> <!--чисто-->
-		<link rel="stylesheet" href="static/assets/css/main.css" /> <!--чисто 18:08-->
+		<noscript><link rel="stylesheet" href="static/assets/css/noscript.css" /></noscript>
 
 		{% block style %} {% endblock%}
 
@@ -27,12 +28,11 @@ ERA_Alex  eraspb@mail.ru
 								<span></span>
 						  	</label>
 						  	<ul class="menu__box">
-								<li><a class="menu__item" href="{{ url_for('index') }}">Главная-4</a></li>
+								<li><a class="menu__item" href="{{ url_for('index') }}">Главная</a></li>
 								<li><a class="menu__item" href="{{ url_for('about_me') }}">Обо мне</a></li>
 								<li><a class="menu__item" href="{{ url_for('technology') }}">Технологии</a></li>
 								<li><a class="menu__item" href="{{ url_for('books') }}">Учебные пособия</a></li>
 								<li><a class="menu__item" href="#contact_ancle">Контакты</a></li>
-								<li><a class="menu__item" href="{{ url_for('test') }}">test</a></li>
 						  	</ul>
 						</div>
 					</section>
@@ -58,9 +58,9 @@ ERA_Alex  eraspb@mail.ru
 						<div class="content">
 
 							{% for item in list_art1 %}
-							<a class="major"><h1>{{ item[2] }}</h1></a>
+							<a class="major"><h1>{{ item.name }}</h1></a>
 
-							<p class="major"> {{ item[3] }}  </p>
+							<p class="major"> {{ item.text }}  </p>
 
 							{% endfor %}
 
@@ -68,7 +68,7 @@ ERA_Alex  eraspb@mail.ru
 
 						{% for item in list_ban1 %}
 						<div class="image">
-							<img src="{{item[3] }}" alt="" />
+							<img src="{{item.file_name }}" alt="" />
 						</div>
 						{% endfor %}
 
@@ -84,8 +84,8 @@ ERA_Alex  eraspb@mail.ru
 
 
 							{% for item in list_art2 %}
-							<h2>{{ item[2] }}</h2>
-							<p>{{ item[3] }}</p>
+							<h2>{{ item.name }}</h2>
+							<p>{{ item.text }}</p>
 							<ul class="actions stacked">
 								<li><a href="{{ url_for('about_me') }}" class="button big wide smooth-scroll-middle">Обо мне</a></li>
 							</ul>
@@ -94,7 +94,7 @@ ERA_Alex  eraspb@mail.ru
 						</div>
 						{% for item in list_ban2 %}
 						<div class="image">
-							<img src="{{item[3] }}" alt="" />
+							<img src="{{item.file_name }}" alt="" />
 						</div>
 						{% endfor %}
 					</section>
@@ -111,9 +111,8 @@ ERA_Alex  eraspb@mail.ru
 						<div class="content">
 
 							{% for item in list_art3 %}
-
-							<h2>{{ item[2] }}</h2>
-							<p>{{ item[3] }}</p>
+							<h2>{{ item.name }}</h2>
+							<p>{{ item.text }}</p>
 							<ul class="actions stacked">
 								<li><a href="{{ url_for('technology') }}" class="button">Технологии</a></li>
 							</ul>
@@ -124,7 +123,7 @@ ERA_Alex  eraspb@mail.ru
 
 						{% for item in list_ban3 %}
 						<div class="image">
-							<img src="{{item[3]}}" alt="" />
+							<img src="{{item.file_name }}" alt="" />
 						</div>
 						{% endfor %}
 					</section>
@@ -137,8 +136,8 @@ ERA_Alex  eraspb@mail.ru
 						<div class="content">
 
 							{% for item in list_art4 %}
-							<h2>{{ item[2] }}</h2>
-							<p>{{ item[3] }}</p>
+							<h2>{{ item.name }}</h2>
+							<p>{{ item.text }}</p>
 							<ul class="actions stacked">
 								<li><a href="{{ url_for('books') }}" class="button">Печатные издания</a></li>
 							</ul>
@@ -149,7 +148,7 @@ ERA_Alex  eraspb@mail.ru
 
 						{% for item in list_ban4 %}
 						<div class="image">
-							<img src="{{item[3] }}" alt="" />
+							<img src="{{item.file_name }}" alt="" />
 						</div>
 						{% endfor %}
 
@@ -161,8 +160,8 @@ ERA_Alex  eraspb@mail.ru
 						<div class="inner">
 
 							{% for item in list_art5 %}
-							<h2>{{ item[2] }}</h2>
-							<p>{{ item[3]|safe }}</p>
+							<h2>{{ item.name }}</h2>
+							<p>{{ item.text|safe }}</p>
 
 							{% endfor %}
 
@@ -175,11 +174,11 @@ ERA_Alex  eraspb@mail.ru
 
 								<article>
 									{% for item in list_img1 %}
-										<img src="{{item[3] }}" alt="" />
+										<img src="{{item.file_name }}" alt="" />
 
 									<div class="caption">
-										<h3>{{ item[2]}}</h3>
-										<p>{{ item[3]}}</p>
+										<h3>{{ item.name}}</h3>
+										<p>{{ item.text}}</p>
 										<ul class="actions fixed">
 											<a href= "https://www.nationalgeographic.co.uk/travel" target="_blank">
 												<li><span class="button small">Details</span></li>
@@ -192,11 +191,11 @@ ERA_Alex  eraspb@mail.ru
 
 								<article>
 									{% for item in list_img2 %}
-										<img src="{{item[3] }}" alt="" />
+										<img src="{{item.file_name }}" alt="" />
 
 									<div class="caption">
-										<h3>{{ item[2]}}</h3>
-										<p>{{ item[3]}}</p>
+										<h3>{{ item.name}}</h3>
+										<p>{{ item.text}}</p>
 										<ul class="actions fixed">
 											<a href= "https://www.fluentu.com/blog/
 											business-english/importance-of-english-in-business/" target="_blank">
@@ -211,11 +210,11 @@ ERA_Alex  eraspb@mail.ru
 
 								<article>
 									{% for item in list_img3 %}
-										<img src="{{item[3] }}" alt="" />
+										<img src="{{item.file_name }}" alt="" />
 
 									<div class="caption">
-										<h3>{{ item[2]}}</h3>
-										<p>{{ item[3]}}</p>
+										<h3>{{ item.name}}</h3>
+										<p>{{ item.text}}</p>
 										<ul class="actions fixed">
 											<a href= "https://www.amazon.com/Prime-Video/b?node=2676882011"
 											   target="_blank">
@@ -229,11 +228,11 @@ ERA_Alex  eraspb@mail.ru
 
 								<article>
 									{% for item in list_img4 %}
-										<img src="{{item[3] }}" alt="" />
+										<img src="{{item.file_name }}" alt="" />
 
 									<div class="caption">
-										<h3>{{ item[2]}}</h3>
-										<p>{{ item[3]}}</p>
+										<h3>{{ item.name}}</h3>
+										<p>{{ item.text}}</p>
 										<ul class="actions fixed">
 											<a href= "https://academicpositions.com/career-advice/
 											a-guide-to-english-proficiency-tests#:~:text=Here%20is%20an%20overview%20of
@@ -249,11 +248,11 @@ ERA_Alex  eraspb@mail.ru
 
 								<article>
 									{% for item in list_img5 %}
-										<img src="{{item[3] }}" alt="" />
+										<img src="{{item.file_name }}" alt="" />
 
 									<div class="caption">
-										<h3>{{ item[2]}}</h3>
-										<p>{{ item[3]}}</p>
+										<h3>{{ item.name}}</h3>
+										<p>{{ item.text}}</p>
 										<ul class="actions fixed">
 											<a href= "https://www.nationalgeographic.co.uk/history-and-civilisation"
 											   target="_blank">
@@ -379,9 +378,7 @@ ERA_Alex  eraspb@mail.ru
 			<script src="static/assets/js/browser.min.js"></script>
 			<script src="static/assets/js/breakpoints.min.js"></script>
 			<script src="static/assets/js/util.js"></script>
-				<script src="static/assets/js/main.js"></script> <!--запуск в 10:10 появилась реклама!-->
-<!--				<script src="static/assets/main2.js"></script> &lt;!&ndash;запуск в 10:10 появилась реклама!&ndash;&gt;-->
-
+			<script src="static/assets/js/main.js"></script>
 			{% block script %}  {% endblock %}
 
 	</body>
