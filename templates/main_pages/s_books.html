@@ -23,7 +23,7 @@
 
     {% for item in maria_books_0 %}
     <div class="image">
-        <img src="{{item.file_name_big }}" alt="" />
+        <img src="{{item[3] }}" alt="" />
     </div>
     {% endfor %}
 
@@ -55,12 +55,12 @@
 								<!-- art1 -->
 								<article>
 									{% for item in maria_books_1 %}
-									<center><img src="{{item.file_name }}" alt="" /></center>
+									<center><img src="{{item[3] }}" alt="" /></center>
 
 									<div class="caption">
-										<h3>{{ item.name}}</h3>
+										<h3>{{ item[1]}}</h3>
 										<ul class="actions fixed">
-											<a href= "{{item.file_name_big }}" class="image">
+											<a href= "{{item[4] }}" class="image">
 												<li><span class="button small">Details</span></li>
 											</a>
 										</ul>
@@ -72,13 +72,12 @@
 								<!-- art2 -->
 								<article>
 									{% for item in maria_books_2 %}
-									<center><img src="{{item.file_name }}" alt="" /></center>
-
+									<center><img src="{{item[3] }}" alt="" /></center>
 
 									<div class="caption">
-										<h3>{{ item.name}}</h3>
+										<h3>{{ item[1]}}</h3>
 										<ul class="actions fixed">
-											<a href= "{{item.file_name_big }}" class="image">
+											<a href= "{{item[4] }}" class="image">
 												<li><span class="button small">Details</span></li>
 											</a>
 										</ul>
@@ -90,13 +89,12 @@
 								<!-- art3 -->
 								<article>
 									{% for item in maria_books_3 %}
-									<center><img src="{{item.file_name }}" alt="" /></center>
-
+									<center><img src="{{item[3] }}" alt="" /></center>
 
 									<div class="caption">
-										<h3>{{ item.name}}</h3>
+										<h3>{{ item[1]}}</h3>
 										<ul class="actions fixed">
-											<a href= "{{item.file_name_big }}" class="image">
+											<a href= "{{item[4] }}" class="image">
 												<li><span class="button small">Details</span></li>
 											</a>
 										</ul>
@@ -108,13 +106,12 @@
 								<!-- art4 -->
 								<article>
 									{% for item in maria_books_4 %}
-									<center><img src="{{item.file_name }}" alt="" /></center>
-
+									<center><img src="{{item[3] }}" alt="" /></center>
 
 									<div class="caption">
-										<h3>{{ item.name}}</h3>
+										<h3>{{ item[1]}}</h3>
 										<ul class="actions fixed">
-											<a href= "{{item.file_name_big }}" class="image">
+											<a href= "{{item[4] }}" class="image">
 												<li><span class="button small">Details</span></li>
 											</a>
 										</ul>

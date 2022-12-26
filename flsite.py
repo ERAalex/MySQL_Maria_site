@@ -534,22 +534,6 @@ def contact():
     return render_template('contact.html', title='Контакты')
 
 
-@app.route("/test", methods=["POST", "GET"])
-def test():
-
-
-    # делаем запрос, что нам надо, какие данные достать.
-    art1 = "SELECT * FROM art3 WHERE position = 'position1'"
-    # через курсор отправляем запрос на получение данных
-    cur.execute(art1)  # Execute the SQL
-    # сохраняем все данные в переменную
-    list_art1 = cur.fetchall()
-
-    ban1 = "SELECT * FROM img_kat WHERE position = 'banner1'"
-    cur.execute(ban1)  # Execute the SQL
-    list_ban1 = cur.fetchall()
-
-    return render_template('test_index.html', title='test', list_art1=list_art1, list_ban1=list_ban1)
 
 
 if __name__ == "__main__":
