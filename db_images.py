@@ -9,6 +9,7 @@ import pymysql
 # MySQL configurations
 # Open database connection
 db = pymysql.connect(host='localhost', user='alex', password='nazca007', database='maria')
+# db = pymysql.connect(host='localhost', user='u1885522_alex', password='nazca007', database='u1885522_maria')
 
 # prepare a cursor object using cursor() method
 cur = db.cursor()

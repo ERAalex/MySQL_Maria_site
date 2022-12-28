@@ -31,11 +31,12 @@ if 'SECURITY_PASSWORD_SALT' not in app.config:
 
 db = SQLAlchemy(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://alex:nazca007@localhost:3306/maria'
-
+# app.config['SQLALCHEMY_DATABASE_URI'] = 'mysql://u1885522_alex:nazca007@localhost:3306/u1885522_maria'
 
 # MySQL configurations
 # Open database connection
 db_2 = pymysql.connect(host='localhost', user='alex', password='nazca007', database='maria')
+# db_2 = pymysql.connect(host='localhost', user='u1885522_alex', password='nazca007', database='u1885522_maria')
 
 # prepare a cursor object using cursor() method
 cur = db_2.cursor()
@@ -258,18 +259,21 @@ def index():
 
     # блок отправки письма
     if request.method == 'POST':
+        try:
+            name = request.form['name']
+            email = request.form['email']
+            message = request.form['message']
 
-        name = request.form['name']
-        email = request.form['email']
-        message = request.form['message']
+            msg = Message(name, sender=email, recipients=['moonanamiss@gmail.com'])
+            # в body ставим текст из формы
+            msg.body = email + " " + message
+            mail.send(msg)
+            flash('Письмо успешно отправлено')
 
-        msg = Message(name, sender=email, recipients=['moonanamiss@gmail.com'])
-        # в body ставим текст из формы
-        msg.body = email + " " + message
-        mail.send(msg)
-        flash('Email Sanded Successfully')
-
-        return redirect(url_for('index'))
+            return redirect(url_for('index'))
+        except:
+            flash('Письмо не было отправлено')
+            return redirect(url_for('index'))
 
 
     ban1 = "SELECT * FROM img_kat WHERE position = 'banner1'"
@@ -279,7 +283,6 @@ def index():
     ban2 = "SELECT * FROM img_kat WHERE position = 'banner2'"
     cur.execute(ban2)  # Execute the SQL
     list_ban2 = cur.fetchall()
-
 
     ban3 = "SELECT * FROM img_kat WHERE position = 'banner3'"
     cur.execute(ban3)  # Execute the SQL
